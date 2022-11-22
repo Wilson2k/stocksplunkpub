@@ -1,0 +1,18 @@
+.jumbotron {
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    background-color:linen;
+    border-bottom-right-radius: 2rem;
+}
+
+.form-inline {
+    display: flex;
+    justify-content: center;
+}
+
+.stockSymbol, .stockName {
+    font-weight: 600;
+    margin-bottom: 0;
+    padding: 1%;
+}

@@ -1,0 +1,29 @@
+<div id="app">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">
+      <img src="/assets/stocksplunk-logo.svg" alt="StockSplunk" width="190" height="24">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav mr-auto" routerLinkActive="active">
+        <a id="homebutton" class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" routerLink="home">Home</a>
+        <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" *ngIf="showAdminPage" routerLink="admin">Admin Page</a>
+        <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" *ngIf="isLoggedIn" routerLink="stocks">Stocks</a>
+      </div>
+      <div class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+        <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" routerLink="register">Register</a>
+        <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" routerLink="login">Login</a>
+      </div>
+      <div class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+        <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" routerLink="profile">Profile</a>
+        <a class="nav-item nav-link" data-toggle="collapse" data-target="#navbarNavAltMarkup" href (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

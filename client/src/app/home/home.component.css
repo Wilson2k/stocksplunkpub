@@ -1,0 +1,11 @@
+.jumbotron {
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 5%;
+    background-color:linen;
+    border-bottom-right-radius: 2rem;
+}
+
+label{
+    font-size: larger;
+}

@@ -1,0 +1,26 @@
+.card {
+    background-color: linen;
+    margin: 10%;
+}
+
+.user-form{
+    margin: 10%;
+}
+
+label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.alert {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+#successAlert, #failAlert{
+    margin: 0
+}
+
+.btn {
+    margin-top: 8px;
+}

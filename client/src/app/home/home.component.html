@@ -1,0 +1,109 @@
+<div class="container py-4">
+  <div class="jumbotron mb-0 p-4">
+    <div *ngIf="!validUser" class="container">
+      <h1 class="display-4">Hello there!</h1>
+      <p class="lead">Welcome to a simple stock simulator website.</p>
+      <hr class="my-4">
+      <p>Note: This site uses a free Alpha Vantage API key for stock data. Because of this, data may not always be real
+        time.
+        Features also have a cooldown time, 5 API calls can be made a minute, and 500 API calls can be made a day.
+      </p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" routerLink="../register" role="button">Sign Up</a>
+      </p>
+    </div>
+    <div *ngIf="validUser" class="container">
+      <h1 class="display-4">Investment Calculator</h1>
+      <p class="lead">This is a simple calculator to help plan for retirement.</p>
+      <hr class="my-4">
+      <form class="user-form" autocomplete="off" [formGroup]="calculatorForm" (ngSubmit)="calculateInvestment()">
+        <label for="principal">Principal</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input class="form-control" type="text" id="principal" formControlName="principal"
+            placeholder="Principal Amount" required>
+        </div>
+        <div *ngIf="principal.invalid && (principal.dirty || principal.touched)" class="alert alert-danger">
+          <div *ngIf="principal.errors?.['required']">
+            Principal is required.
+          </div>
+          <div *ngIf="principal.errors?.['pattern']">
+            Principal must be a valid number.
+          </div>
+          <div *ngIf="principal.errors?.['min']">
+            Principal must be greater than zero. (Minimum 0.01)
+          </div>
+        </div>
+        <p>This is the initial amount you start with.</p>
+
+        <label for="pmt">Monthly Contribution</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input class="form-control" type="text" id="pmt" formControlName="pmt"
+            placeholder="Contribution Amount" required>
+        </div>
+        <div *ngIf="pmt.invalid && (pmt.dirty || pmt.touched)" class="alert alert-danger">
+          <div *ngIf="pmt.errors?.['required']">
+            Monthly contribution amount is required.
+          </div>
+          <div *ngIf="pmt.errors?.['pattern']">
+            Monthly contribution amount must be a valid number.
+          </div>
+          <div *ngIf="pmt.errors?.['min']">
+            Monthly contribution amount must be greater than zero. (Minimum 0.01)
+          </div>
+        </div>
+        <p>This is the amount you deposit at the end of each month.</p>
+
+        <label for="r">Annual Interest Rate</label>
+        <div class="input-group mb-3">
+          <input class="form-control" type="text" id="r" formControlName="r"
+            placeholder="Annual Interest Rate" required>
+            <div class="input-group-append">
+              <span class="input-group-text">%</span>
+            </div>
+        </div>
+        <div *ngIf="r.invalid && (r.dirty || r.touched)" class="alert alert-danger">
+          <div *ngIf="r.errors?.['required']">
+            Annual interest rate is required.
+          </div>
+          <div *ngIf="r.errors?.['pattern']">
+            Annual interest rate must be a valid number.
+          </div>
+          <div *ngIf="r.errors?.['min']">
+            Annual interest rate must be greater than zero. (Minimum 0.01)
+          </div>
+        </div>
+        <p>This is the interest rate at which your investment will grow every year. Historically, the S&P 500 has an annual return of around 10%</p>
+
+        <label for="t">Number of Years</label>
+        <div class="input-group mb-3">
+          <input class="form-control" type="text" id="t" formControlName="t"
+            placeholder="Years" required>
+            <div class="input-group-append">
+              <span class="input-group-text">years</span>
+            </div>
+        </div>
+        <div *ngIf="t.invalid && (t.dirty || t.touched)" class="alert alert-danger">
+          <div *ngIf="t.errors?.['required']">
+            Years is required.
+          </div>
+          <div *ngIf="t.errors?.['pattern']">
+            Years must be a valid number.
+          </div>
+          <div *ngIf="t.errors?.['min']">
+            Years must be greater than zero.
+          </div>
+        </div>
+        <p>This is the number of years you want your money to grow for.</p>
+        <button *ngIf="!calculatorForm.invalid" class="btn btn-primary" type="submit" [disabled]="calculatorForm.invalid">Calculate</button>
+      </form>
+      <hr class="my-4">
+      <p *ngIf="total" class="lead">In {{years}} years you will have: <strong> {{ total |  currency:'USD':'symbol':'1.2-2'}} </strong></p>
+    </div>
+  </div>
+</div>

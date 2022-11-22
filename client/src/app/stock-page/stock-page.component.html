@@ -1,0 +1,84 @@
+<div class="container py-4">
+    <header class="jumbotron mb-0 p-4">
+        <h3>{{ message }}</h3>
+        <div *ngIf="validUser && currentUser && !message" class="container">
+            <h3 *ngIf="(stockInfo | keyvalue)?.length" class="mb-3">{{ stockInfo.name }}</h3>
+            <div *ngIf="ticker" class="card-header">
+                <h4 class="card-title mb-0">{{ ticker.toUpperCase() }}</h4>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <div class="d-flex w-100 px-4 justify-content-between">
+                        <div class="container" *ngIf="currentUserInvested">
+                            <h5>Currently Own: {{ currentUserShares }} shares</h5>
+                        </div>
+                        <div class="container" *ngIf="(stockQuote | keyvalue)?.length">
+                            <h5 class="mb-3">Price: {{ stockQuote.price | currency:'USD':'symbol':'1.2-2' }} per
+                                share</h5>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <h5>Spending Power: {{currentUser.cash | currency:'USD':'symbol':'1.2-2'}}</h5>
+                        <hr>
+                    </div>
+                    <div *ngIf="(stockInfo | keyvalue)?.length" class="container">
+                        <h5>Information</h5>
+                        <p class="text-left">{{ stockInfo.description }}</p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="maxBuyableShares && stockPrice" class="card mx-4">
+                <div class="card-header">
+                    <h5 class="card-title my-0">Buy Share(s)</h5>
+                </div>
+                <form class="user-form mx-4 my-4">
+                    <div class="input-group">
+                        <input class="form-control" type="number" id="buymount" [formControl]="buyAmount"
+                            placeholder="Amount" required (blur)="transformBuyInput()" min="1" step="1"
+                            max="{{maxBuyableShares}}">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Shares</span>
+                        </div>
+                    </div>
+                    <div *ngIf="buyAmount.invalid && (buyAmount.dirty || buyAmount.touched)"
+                        class="alert alert-danger mt-4 mb-0">
+                        <div>
+                            Must enter valid amount. Cannot purchase more than {{maxBuyableShares}} shares.
+                        </div>
+                    </div>
+                    <button class="btn btn-success mt-4" type="submit" (click)="buyStock()"
+                        *ngIf="!buyAmount.invalid">Buy
+                        {{buyAmount.value}} Share(s)</button>
+                    <div *ngIf="!buyAmount.invalid" class="mt-2">Total:<strong> {{tradeBuyValue |
+                            currency:'USD':'symbol':'1.2-2'}}</strong></div>
+                </form>
+            </div>
+            <div *ngIf="currentUserInvested" class="card mx-4 mt-4">
+                <div class="card-header">
+                    <h5 class="card-title my-0">Sell Share(s)</h5>
+                </div>
+                <form class="user-form  mx-4 my-4">
+                    <div class="input-group">
+                        <input class="form-control" type="number" id="buymount" [formControl]="sellAmount"
+                            placeholder="Amount" required (blur)="transformSellInput()" min="1" step="1"
+                            max="{{currentUserShares}}">
+                        <div class="input-group-append">
+                            <span class="input-group-text">Shares</span>
+                        </div>
+                    </div>
+                    <div *ngIf="sellAmount.invalid && (sellAmount.dirty || sellAmount.touched)"
+                        class="alert alert-danger mt-4 mb-0">
+                        <div>
+                            Must enter valid amount. Cannot sell more than {{currentUserShares}} shares.
+                        </div>
+                    </div>
+                    <button class="btn btn-danger mt-4" type="submit" (click)="sellStock()"
+                        *ngIf="!sellAmount.invalid">Sell
+                        {{sellAmount.value}} Share(s)</button>
+                    <div *ngIf="!sellAmount.invalid" class="mt-2">Total:<strong> {{tradeSellValue |
+                            currency:'USD':'symbol':'1.2-2'}}</strong></div>
+                </form>
+            </div>
+        </div>
+    </header>
+</div>

@@ -1,0 +1,113 @@
+<div class="container py-4">
+  <header class="jumbotron mb-0 p-4">
+    <h3>{{ message }}</h3>
+    <div *ngIf="validUser && currentUser && !message" class="container p-0">
+      <div class="container mb-4">
+        <h1>{{currentUser.fname}} {{currentUser.lname}}</h1>
+        <hr class="my-4">
+        <h4>Total Value: {{currentUser.balance | currency:'USD':'symbol':'1.2-2'}}</h4>
+        <hr class="my-4">
+        <h5>Spending Power: {{currentUser.cash | currency:'USD':'symbol':'1.2-2'}}</h5>
+        <h5>Portfolio Value: {{currentUser.portfolioValue | currency:'USD':'symbol':'1.2-2'}}</h5>
+      </div>
+      <div class="card text-bg-primary mb-3">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Portfolio</h5>
+        </div>
+        <div class="card-body" *ngIf="!currentUserPortfolio.length">
+          <div class="list-group">
+            <div class="d-flex w-100 px-4 justify-content-between">
+              <div class="container">
+                <h5>Portfolio is empty!</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" *ngIf="currentUserPortfolio.length">
+          <div class="list-group">
+            <div class="d-flex w-100 px-4 justify-content-between">
+              <div class="container">
+                <h5>Ticker</h5>
+              </div>
+              <div class="container">
+                <h5>Shares</h5>
+              </div>
+              <div class="container">
+                <h5>Value</h5>
+              </div>
+            </div>
+            <a *ngFor="let stock of currentUserPortfolio" class="list-group-item list-group-item-action"
+              routerLink="../user/manage/{{stock.ticker.toLowerCase()}}">
+              <div class="d-flex w-100 justify-content-between">
+                <div class="container">
+                  <h5 class="stockSymbol text-success">{{stock.ticker}}</h5>
+                </div>
+                <div class="container">
+                  <h5 class="stockVolume">{{stock.shares}}</h5>
+                </div>
+                <div class="container">
+                  <h5 class="stockValue">{{stock.value | currency:'USD':'symbol':'1.2-2'}}</h5>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card text-bg-primary mb-3">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Add Funds</h5>
+        </div>
+        <div class="card-body">
+          <form class="user-form">
+            <div class="input-group my-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input class="form-control" type="number" id="addAmount" [formControl]="addAmount" placeholder="Amount"
+                required (blur)="transformAddInput()" min="0.01" step="0.01" max="10000000000">
+              <div class="input-group-append">
+                <span class="input-group-text">USD</span>
+              </div>
+            </div>
+            <div *ngIf="addAmount.invalid && (addAmount.dirty || addAmount.touched)" class="alert alert-danger">
+              <div>
+                Must enter valid amount. Maximum 10 billion per transaction.
+              </div>
+            </div>
+            <button class="btn btn-success" type="submit" (click)="addFunds(); redirectProfile()"
+              *ngIf="!addAmount.invalid">Add {{addAmount.value | currency:'USD':'symbol':'1.2-2'}}</button>
+          </form>
+        </div>
+      </div>
+      <div class="card text-bg-primary" *ngIf="currentUser.cash">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Remove Funds</h5>
+        </div>
+        <div class="card-body">
+          <form class="user-form">
+            <div class="input-group my-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input class="form-control" type="number" id="removeAmount" [formControl]="removeAmount"
+                placeholder="Amount" required (blur)="transformRemoveInput()" min="0.01" step="0.01"
+                max="{{currentUser.cash}}">
+              <div class="input-group-append">
+                <span class="input-group-text">USD</span>
+              </div>
+            </div>
+            <div *ngIf="removeAmount.invalid && (removeAmount.dirty || removeAmount.touched)"
+              class="alert alert-danger">
+              <div>
+                Must enter valid amount.
+              </div>
+            </div>
+            <button class="btn btn-danger" type="submit" (click)="removeFunds(); redirectProfile()"
+              *ngIf="!removeAmount.invalid">Remove {{removeAmount.value | currency:'USD':'symbol':'1.2-2'}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>

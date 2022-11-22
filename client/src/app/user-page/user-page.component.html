@@ -1,0 +1,24 @@
+<div class="container py-4">
+    <header class="jumbotron mb-0">
+        <h3>{{ message }}</h3>
+        <div *ngIf="validUser && !message" class="container">
+            <h3>Add a stock to your portfolio</h3>
+            <form class="form-inline mb-3">
+                <input #searchbar class="form-control my-2 mr-sm-2" type="search" placeholder="Stock"
+                    aria-label="Search" (keyup.enter)="getSearchResults(searchbar.value)">
+                <button class="form-control btn btn-outline-success my-2" (click)="getSearchResults(searchbar.value)"
+                    type="submit">Search</button>
+            </form>
+            <div class="list-group" *ngIf="searchResults">
+                <h5 *ngIf="!searchResults.length">No Results</h5>
+                <a *ngFor="let stock of searchResults" class="list-group-item list-group-item-action"
+                    href="../user/manage/{{stock.symbol.toLowerCase()}}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="stockSymbol text-success">{{stock.symbol}}</h5>
+                        <h5 class="stockName">{{stock.name}}</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+</div>

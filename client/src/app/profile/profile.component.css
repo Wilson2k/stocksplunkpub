@@ -1,0 +1,11 @@
+.jumbotron {
+    text-align: center;
+    background-color:linen;
+    border-bottom-right-radius: 2rem;
+}
+
+.stockSymbol, .stockVolume, .stockValue {
+    font-weight: 600;
+    margin-bottom: 0;
+    padding: 1%;
+}
