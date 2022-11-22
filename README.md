@@ -7,6 +7,11 @@ To run server tests and the app on your machine, make sure you have MongoDB inst
 
 Before running the app locally, an [Alpha Vantage API key](https://www.alphavantage.co/support/#api-key) is needed. Edit the .env file in the server folder and set ALPHA_KEY to your key.
 
+Before running any commands, go to the main folder and run
+```
+npm install
+```
+
 To run the app locally on your machine.
 ```
 npm start
