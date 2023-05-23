@@ -16,7 +16,7 @@ export class StockPageComponent implements OnInit {
   sellAmount = new FormControl('', {updateOn: 'blur'});
   message?: string;
   validUser = false;
-  ticker?: string;
+  ticker = this.route.snapshot.paramMap.get('ticker')!;
   stockInfo?: any;
   stockQuote?: any;
   stockPrice?: number;
@@ -32,16 +32,13 @@ export class StockPageComponent implements OnInit {
     const user = this.token.getUser();
     if (Object.keys(user).length !== 0) {
       this.validUser = true;
-      this.ticker = this.route.snapshot.paramMap.get('ticker')!;
       this.getPortfolio();
-      this.getStockInfo(this.ticker);
-      this.getStockQuote(this.ticker);
     } else {
       this.message = "Please login.";
       this.validUser = false;
     }
   }
-  getPortfolio(): void {
+  getPortfolio = () => {
     if (this.validUser) {
       this.userService.getProfilePage().subscribe({
         next: (data) => {
@@ -57,6 +54,8 @@ export class StockPageComponent implements OnInit {
               }
             });
           }
+          this.getStockInfo(this.ticker);
+          this.getStockQuote(this.ticker);
         },
         error: (err) => {
           this.message = JSON.parse(err.error).message;

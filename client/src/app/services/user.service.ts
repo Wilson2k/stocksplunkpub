@@ -8,11 +8,11 @@ import { isDevMode } from '@angular/core';
 export class UserService {
   constructor(private http: HttpClient) {
     if(isDevMode()) {
-      this.rootURL = 'http://localhost:8080/';
+      this.rootURL = 'http://localhost:8080/api/';
     }
   }
 
-  rootURL = '/';
+  rootURL = '/api/';
   // Simple data for authorized pages
   getPublicContent(): Observable<any> {
     return this.http.get(this.rootURL , { responseType: 'text' });

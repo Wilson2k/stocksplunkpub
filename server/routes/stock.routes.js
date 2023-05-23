@@ -9,7 +9,7 @@ module.exports = function(app) {
     );
     next();
   });
-  app.get("/stock/search", [authJwt.verifyToken], controller.stockSearch);
-  app.get("/stock/quote", [authJwt.verifyToken], controller.stockQuote);
-  app.get("/stock/info", [authJwt.verifyToken], controller.stockInfo);
+  app.get("/api/stock/search", [authJwt.verifyToken], controller.stockSearch);
+  app.get("/api/stock/quote", [authJwt.verifyToken], controller.stockQuote);
+  app.get("/api/stock/info", [authJwt.verifyToken], controller.stockInfo);
 };

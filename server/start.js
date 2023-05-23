@@ -1,4 +1,5 @@
 const app = require("./server")
+require('dotenv').config()
 
 // Connect to mongo db
 const db = require("./models");
@@ -34,6 +35,7 @@ function initializeRoles() {
                 if (err) {
                     console.log("error", err);
                 }
+                console.log("added 'user' to roles collection");
             });
             new Role({
                 name: "admin"
@@ -41,6 +43,7 @@ function initializeRoles() {
                 if (err) {
                     console.log("error", err);
                 }
+                console.log("added 'admin' to roles collection");
             });
         }
     });

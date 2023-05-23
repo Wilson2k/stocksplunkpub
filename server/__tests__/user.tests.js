@@ -4,7 +4,7 @@ const app = require("../server");
 
 require("dotenv").config();
 
-// Note: Need a local mongo db server running locally at 27017
+// Note: Need a local mongo db server running locally at 27017, and Redis at 6379
 
 beforeEach(async () => {
   await mongoose.connect(process.env.MONGO_CONNECTION_STRING);

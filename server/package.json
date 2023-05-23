@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./start.js",
-    "build": "ENVIRONMENT=$ENVIRONMENT webpack",
+    "server": "nodemon ./start.js",
     "test": "jest --detectOpenHandles"
   },
   "keywords": [],
@@ -20,6 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.2",
     "nodemon": "^2.0.19",
+    "redis": "^4.6.6",
     "webpack": "^5.74.0",
     "webpack-stream": "^7.0.0"
   },

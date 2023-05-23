@@ -12,10 +12,10 @@ const httpOptions = {
 export class AuthService {
   constructor(private http: HttpClient) {
     if(isDevMode()) {
-      this.rootURL = 'http://localhost:8080/';
+      this.rootURL = 'http://localhost:8080/api/';
     }
   }
-  rootURL = '/';
+  rootURL = '/api/';
   
   login(email: string, password: string): Observable<any> {
     return this.http.post(this.rootURL + 'login', {

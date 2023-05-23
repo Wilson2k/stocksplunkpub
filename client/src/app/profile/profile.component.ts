@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
     if (Object.keys(user).length !== 0) {
       this.validUser = true;
       this.updatePortfolio();
-      this.getPortfolio();
     } else {
       this.message = "Please login.";
       this.validUser = false;
@@ -34,6 +33,7 @@ export class ProfileComponent implements OnInit {
     if (this.validUser) {
       this.userService.updateProfilePage().subscribe({
         next: (data) => {
+          this.getPortfolio();
         },
         error: (err) => {
           this.message = err.error.message;

@@ -1,0 +1,48 @@
+version: "3.8"
+
+volumes:
+  stocksplunkdata:
+
+# Define the services/containers to be run
+services:
+  angular: # Name for frontend service
+    build: client # Specify the directory of the Dockerfile
+    restart: always
+    expose:
+      - 4200
+
+  express: # Name for backend service (API)
+    build: server # Specify the directory of the Dockerfile
+    restart: always
+    expose:
+      - 8080
+    depends_on:
+      - redis
+      - mongo
+    
+  redis: # Name for redis cache service
+    image: redis
+    restart: always
+    expose:
+      - 6379
+    volumes:
+      - stocksplunkdata:/redis
+
+  mongo: # Name for mongo database service
+    image: mongo:latest # Specify image to build container from
+    restart: always
+    expose:
+      - 27017
+    volumes:
+      - stocksplunkdata:/mongo
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - angular
+      - express

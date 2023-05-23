@@ -9,9 +9,9 @@ module.exports = function (app) {
         );
         next();
     });
-    app.post("/register",
+    app.post("/api/register",
         [verifySignUp.checkDuplicateEmail, verifySignUp.checkRolesExisted],
         controller.signup
     );
-    app.post("/login", controller.signin);
+    app.post("/api/login", controller.signin);
 };
